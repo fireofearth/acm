@@ -1,0 +1,14 @@
+# ignore all
+*
+
+!Makefile
+
+# unignore all with extensions
+!*.*
+
+# unignore all directories
+!*/
+
+# ingnore these extensions
+*.md
+*.o
