@@ -123,48 +123,72 @@ private:
     }
 };
 
-void top_sort_school(Graph &g, int k) {
-    // noedge - vtx has no incoming edges
-    // nonoedge - vtx has no incoming or outgoing edges
-    // we want to prioritize taking courses that have prereqs.
-    queue<int> noedge, nonoedge, tmpnoedge, tmpnonoedge;
-    vector<int> v;
-    int l, m, acc; acc = 0;
-    set<int> nbrs;
+typedef pair<int, int> int_pair;
 
+struct SortMaster {
+    bool operator()(const int_pair& lhs, const int_pair& rhs) const {
+        return lhs.second < rhs.second;
+    }
+};
+
+typedef priority_queue<int_pair, vector<int_pair>, SortMaster> pq;
+
+void top_sort_rev(Graph &g, int* depth) {
+    bool visited[g.get_size()];
+    queue<int> noedge, tmp; // set of vertices with no incoming edges
+    int k, l, m; l = 0;
     for(int i = 0; i < g.get_size(); i++) {
-        if(!g.has_incoming(i)) {
-            if(!g.has_outgoing(i)) nonoedge.push(i);
-            else noedge.push(i);
-        }
+        visited[i] = false;
+        if(!g.has_outgoing(i))
+            noedge.push(i);
     }
 
-    while(!noedge.empty() || !nonoedge.empty()) {
+    while(!noedge.empty()) {
+        m = noedge.size();
+        for(int j = 0; j < m; j++) {
+            k = noedge.front(); noedge.pop();
+            depth[k] = l; // whole purpose of this function to fill depth lol.
+            visited[k] = true;
+
+            // remove all edges outgoing from k
+            for(int i : g.incoming_edges(k)) {
+                if(!visited[i])
+                    tmp.push(i); // all incoming edges have out degree one
+            }
+        }
+        while(!tmp.empty()) {
+            noedge.push(tmp.front()); tmp.pop();
+        }
+        l++;
+    }
+}
+
+void top_sort_school(Graph &g, int k, int* depth) {
+    pq noedge, tmp;
+    int l, m, acc; acc = 0;
+
+    for(int i = 0; i < g.get_size(); i++) {
+        if(!g.has_incoming(i))
+            noedge.push(int_pair(i, depth[i]));
+    }
+
+    while(!noedge.empty()) {
         acc++;
-        m = min(k, (int) (noedge.size() + nonoedge.size()));
+        m = min(k, (int) noedge.size());
         //cout << "stack sz: " << m << endl;
         for(int i = 0; i < m; i++) {
-            if(!noedge.empty()) {
-                l = noedge.front(); noedge.pop();
-            } else {
-                l = nonoedge.front(); nonoedge.pop();
-            }
+            l = noedge.top().first; noedge.pop();
             //cout << acc << ": " << l << endl;
 
             // remove all edges outgoing from k
             for(int j : g.outgoing_edges(l)) {
                 g.rem_edge(l, j);
-                if(!g.has_incoming(j)) {
-                    if(!g.has_outgoing(j)) tmpnonoedge.push(j);
-                    else tmpnoedge.push(j);
-                }
+                if(!g.has_incoming(j))
+                    tmp.push(int_pair(j, depth[j]));
             }
         }
-        while(!tmpnoedge.empty()) {
-            noedge.push(tmpnoedge.front()); tmpnoedge.pop();
-        }
-        while(!tmpnonoedge.empty()) {
-            nonoedge.push(tmpnonoedge.front()); tmpnonoedge.pop();
+        while(!tmp.empty()) {
+            noedge.push(tmp.top()); tmp.pop();
         }
     }
 
@@ -172,9 +196,10 @@ void top_sort_school(Graph &g, int k) {
 }
 
 /*
-Solution using two queues instead of stacks that still does not work
+This crazy technique uses *2* topological sorts
+It times out on test 12
 
-g++ -std=c++11 g-graduation.cpp -o k
+g++ -std=c++11 g-graduation3.cpp -o k
 
 4 2
 3 3 4 0
@@ -182,11 +207,14 @@ g++ -std=c++11 g-graduation.cpp -o k
 3 3
 0 1 2
 
-10 3
+11 3
 9 9 9 9 10 10 10 10 11 11 0
 
-6 3
-2 0 2 2 0 0
+11 3
+0 1 1 2 2 2 2 3 3 3 3
+
+8 3
+2 0 2 0 4 4 2 5 6
 
 9 3
 2 0 2 2 0 0 6 6 6
@@ -194,13 +222,22 @@ g++ -std=c++11 g-graduation.cpp -o k
 int main() {
     int n, k, a;
     cin >> n >> k;
+    int depth[n];
     Graph g = Graph(n);
+
     for(int i = 0; i < n; i++) {
+        depth[i] = 0;
         cin >> a;
-        if(a)
+        if(a) {
             g.add_edge(i, a - 1);
+        }
     }
 
-    top_sort_school(g, k);
+    top_sort_rev(g, depth);
+    for(int i = 0; i < n; i++) printf("%d ", depth[i]);
+    cout << endl;
+    top_sort_school(g, k, depth);
     return 0;
 }
+
+

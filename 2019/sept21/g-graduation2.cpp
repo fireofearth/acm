@@ -2,7 +2,6 @@
 #include <string>
 #include <vector>
 #include <stack>
-#include <queue>
 #include <set>
 using namespace std;
 
@@ -124,47 +123,31 @@ private:
 };
 
 void top_sort_school(Graph &g, int k) {
-    // noedge - vtx has no incoming edges
-    // nonoedge - vtx has no incoming or outgoing edges
-    // we want to prioritize taking courses that have prereqs.
-    queue<int> noedge, nonoedge, tmpnoedge, tmpnonoedge;
-    vector<int> v;
+    stack<int> noedge, tmp;
     int l, m, acc; acc = 0;
     set<int> nbrs;
 
     for(int i = 0; i < g.get_size(); i++) {
-        if(!g.has_incoming(i)) {
-            if(!g.has_outgoing(i)) nonoedge.push(i);
-            else noedge.push(i);
-        }
+        if(!g.has_incoming(i))
+            noedge.push(i);
     }
 
-    while(!noedge.empty() || !nonoedge.empty()) {
+    while(!noedge.empty()) {
         acc++;
-        m = min(k, (int) (noedge.size() + nonoedge.size()));
-        //cout << "stack sz: " << m << endl;
+        m = min(k, (int) noedge.size());
         for(int i = 0; i < m; i++) {
-            if(!noedge.empty()) {
-                l = noedge.front(); noedge.pop();
-            } else {
-                l = nonoedge.front(); nonoedge.pop();
-            }
+            l = noedge.top(); noedge.pop();
             //cout << acc << ": " << l << endl;
 
             // remove all edges outgoing from k
             for(int j : g.outgoing_edges(l)) {
                 g.rem_edge(l, j);
-                if(!g.has_incoming(j)) {
-                    if(!g.has_outgoing(j)) tmpnonoedge.push(j);
-                    else tmpnoedge.push(j);
-                }
+                if(!g.has_incoming(j))
+                    tmp.push(j);
             }
         }
-        while(!tmpnoedge.empty()) {
-            noedge.push(tmpnoedge.front()); tmpnoedge.pop();
-        }
-        while(!tmpnonoedge.empty()) {
-            nonoedge.push(tmpnonoedge.front()); tmpnonoedge.pop();
+        while(!tmp.empty()) {
+            noedge.push(tmp.top()); tmp.pop();
         }
     }
 
@@ -172,9 +155,9 @@ void top_sort_school(Graph &g, int k) {
 }
 
 /*
-Solution using two queues instead of stacks that still does not work
+Uses old method with stacks that does not work.
 
-g++ -std=c++11 g-graduation.cpp -o k
+g++ -std=c++11 g-graduation2.cpp -o k
 
 4 2
 3 3 4 0
@@ -184,12 +167,6 @@ g++ -std=c++11 g-graduation.cpp -o k
 
 10 3
 9 9 9 9 10 10 10 10 11 11 0
-
-6 3
-2 0 2 2 0 0
-
-9 3
-2 0 2 2 0 0 6 6 6
 */
 int main() {
     int n, k, a;
@@ -204,3 +181,10 @@ int main() {
     top_sort_school(g, k);
     return 0;
 }
+
+
+
+
+
+
+
