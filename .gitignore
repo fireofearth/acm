@@ -3,12 +3,11 @@
 
 !Makefile
 
-# unignore all with extensions
-!*.*
-
 # unignore all directories
 !*/
 
+# unignore all with extensions
+!*.*
+
 # ingnore these extensions
-*.md
 *.o

@@ -1,0 +1,24 @@
+
+Problem A
+Anthony and Cora
+
+Anthony and Cora play a very exciting game. Initially, Anthony has N
+points and Cora has M points. The game then goes on for several rounds, during each round, either Anthony wins or Cora wins, the loser of the round loses 1
+
+point while nothing happens to the winner of the round. The game ends when either Anthony or Cora has no points left, and the one still left with points is the winner of the game.
+
+Cora promises Anthony a sweet prize if he wins the game, but will cruelly humiliate Anthony if he loses. Anthony can very accurately evaluate himself and perfectly predict that his probability of winning the round i
+is exactly pi
+
+. Now, in order to decide whether to play this game with Cora or not, he needs to know the probability of him winning the game.
+
+Help Anthony find his probability of winning!
+Input
+
+The first line contain integers 1≤N,M≤1000. N+M−1 lines follow, with the i-th line containing 0≤pi≤1, pi has at most 6
+
+decimal digits.
+Output
+
+Output a single line containing the probability of Anthony winning this game. Your answer will be considered correct if its absolute or relative error doesn’t exceed 10−6
+.
