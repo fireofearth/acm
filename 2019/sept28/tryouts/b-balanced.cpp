@@ -1,9 +1,7 @@
 #include <iostream>
 #include <string>
-#include <cctype>
-#include <cmath>
 #include <vector>
-#include <utility>
+#include <cmath>
 #include <set>
 using namespace std;
 
@@ -65,7 +63,6 @@ int main() {
     int AT[N];
     int DF[N];
     set<int> b[N];
-    bool tmp;
     for(int i = 0; i < N; i++) {
         cin >> name[i] >> HP[i] >> AT[i] >> DF[i];
         b[i] = set<int>();
@@ -76,14 +73,10 @@ int main() {
         return 0;
     }
 
-    for(int i = 0; i < N; i++) {
-        // compare against fighter
-        for(int j = 0; j < N; j++) {
-            tmp = i_beats_j(HP[i], AT[i], DF[i], HP[j], AT[j], DF[j]);
-            if(i != j && tmp)
+    for(int i = 0; i < N; i++)
+        for(int j = 0; j < N; j++)
+            if(i != j && i_beats_j(HP[i], AT[i], DF[i], HP[j], AT[j], DF[j]))
                 b[i].insert(j);
-        }
-    }
 
     set<set<int>> touched;
     set<int> tmps;
@@ -91,11 +84,7 @@ int main() {
         for(int j : b[i]) {
             for(int k : b[j]) {
                 if(b[k].count(i) != 0) {
-                    // we found it
-                    tmps = set<int>();
-                    tmps.insert(i);
-                    tmps.insert(j);
-                    tmps.insert(k);
+                    tmps = set<int>({i, j, k});
                     if(touched.count(tmps) == 0) {
                         acc += 1;
                         sol.push_back(name[i] + " " + name[j] + " " + name[k]);
