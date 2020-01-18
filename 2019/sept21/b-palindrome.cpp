@@ -9,6 +9,12 @@ typedef unsigned long long int mlong;
 
 g++ -std=c++11 b-palindrome.cpp -o k
 1 to 2*10^5 strings
+
+mrowlatemymetal
+mrowlatemymetalworm
+
+wasitacaro
+wasitacaroracatisaw
 */
 
 void debug() {

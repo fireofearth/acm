@@ -10,6 +10,29 @@ void debug() {
 }
  
 /*
+* passed all the tests *
+
+NESW
+o: 4
+
+WNEENWEENEENE
+o: 10
+
+EEEEEEEEE
+o: 6
+
+NEWSNEWSSNEWNEWSSS
+o: 13
+
+NESWSENWSESN
+o: 11
+
+NSEWESN
+o: 7
+
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+o: 21
+
 g++ -std=c++11 e-rover.cpp -o k
 */
 int main() {

@@ -5,6 +5,13 @@ using namespace std;
 
 /**
 g++ -std=c++11 k-summer.cpp -o k
+
+abbcccddddeeeee
+o: 10
+
+thenumberofgoodstringsis
+o: 143
+
 */
 int main() {
     unordered_set<char> s = unordered_set<char>(); // charaters visited at each i

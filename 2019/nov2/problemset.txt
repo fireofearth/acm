@@ -1,0 +1,55 @@
+L 	
+Millionaire
+standard input/output
+2 s, 256 MB
+	Submit Add to favourites 	 x73
+M 	
+Magic Trick
+standard input/output
+2 s, 256 MB
+	Submit Add to favourites 	 x549
+N 	
+Egg Drop
+standard input/output
+2 s, 256 MB
+	Submit Add to favourites 	 x522
+O 	
+Grid
+standard input/output
+2 s, 256 MB
+	Submit Add to favourites 	 x339
+P 	
+Complexity
+standard input/output
+2 s, 256 MB
+	Submit Add to favourites 	 x600
+Q 	
+Excellence
+standard input/output
+2 s, 256 MB
+	Submit Add to favourites 	 x547
+R 	
+Class Time
+standard input/output
+2 s, 256 MB
+	Submit Add to favourites 	 x618
+S 	
+Surf
+standard input/output
+4 s, 256 MB
+	Submit Add to favourites 	 x236
+T 	
+Triangle
+standard input/output
+2 s, 256 MB
+	Submit Add to favourites 	 x578
+U 	
+Blur
+standard input/output
+2 s, 256 MB
+	Submit Add to favourites 	 x237
+V 	
+Gears
+standard input/output
+4 s, 256 MB
+	Submit Add to favourites 	 x130
