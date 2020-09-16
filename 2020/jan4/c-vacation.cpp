@@ -25,6 +25,7 @@ int get_index(int i, vector<vector<int>> &v, int p, int pp) {
 
 /*
 g++ -std=c++11 c-vacation.cpp -o k
+does not work
 */
 int main() {
     int N, a, b ,c;

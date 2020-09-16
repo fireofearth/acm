@@ -5,6 +5,7 @@ typedef long long int lld;
 
 /*
 g++ -std=c++11 c-vacation.cpp -o k
+version submitted and accepted
 */
 int main() {
     int N, a, b ,c;
