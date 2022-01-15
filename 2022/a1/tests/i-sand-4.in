@@ -1,0 +1,17 @@
+3
+1
+vanilla
+1
+(vanilla & -vanilla)
+2
+redvelvet
+vanilla
+2
+(-vanilla | vanilla)
+(-redvelvet | -redvelvet)
+2
+redvelvet
+banana
+2
+(banana => redvelvet)
+(redvelvet => banana)
