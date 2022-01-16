@@ -19,9 +19,10 @@ bool DEBUG = false;
 ll dijkstra(
     vector<vector<ll>> &cost,
     vector<vector<ll>> &adj,
-    int j, int k, int mask
+    int k, int j, int mask
 ) {
     // dijkstra j => k
+    // use this if we can visit more than one node while traveling
     priority_queue<
         pair<ll, int>, // cost, node
         vector<pair<ll, int>>,
@@ -29,10 +30,10 @@ ll dijkstra(
     > q;
     int u, v, i;
     ll d;
-    q.emplace(0, j);
+    q.emplace(0, k);
     while(!q.empty()) {
         tie(d, u) = q.top(); q.pop();
-        if(u == k) return d;
+        if(u == j) return d;
         if(!((mask >> u) & 1)) continue;
         mask = mask ^ (1 << u);
         for(int v : adj[u]) {
