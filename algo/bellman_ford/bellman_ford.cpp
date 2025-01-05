@@ -2,10 +2,10 @@
 using namespace std;
 
 /// bellman ford algorithm
-/// given directed edges with real value weights and a source node
+/// given directed graph withwith real value edge weights and a source node
 /// return cost an path from source node to every other node
 /// or find the nodes in a negative cycle
-/// works when nodes disconnected from source exists
+/// output unreachable for nodes disconnected from source
 
 /// in:
 /// [number of nodes] [number of edges]
@@ -58,8 +58,10 @@ cycle detected
 2 4 5
 
 g++ -std=c++20 bellman_ford.cpp -o k
+./k < tests/bellman-ford-1.in
 */
 int main () {
+    // initialize parameters
     int n_nodes, n_edges, i_source;
     std::cin >> n_nodes >> n_edges >> i_source;
     i_source--;
