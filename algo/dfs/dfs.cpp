@@ -62,7 +62,7 @@ int main () {
     std::vector<int> visited(n_nodes, false);
     // dfs.top() = {node,depth}
     std::stack<std::pair<int, int>> dfs;
-    dfs.push(std::make_pair(i_src, 0));
+    dfs.push({i_src, 0});
     while(!dfs.empty()) {
         auto [i, depth] = dfs.top();
         dfs.pop();
@@ -83,7 +83,7 @@ int main () {
                 continue;
             }
 
-            dfs.push(std::make_pair(j, depth + 1));
+            dfs.push({j, depth + 1});
         }
     }
 

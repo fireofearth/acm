@@ -2,10 +2,11 @@
 using namespace std;
 
 /// bellman ford algorithm
-/// given directed graph withwith real value edge weights and a source node
+/// given directed graph with real value edge weights and a source node
 /// return cost an path from source node to every other node
 /// or find the nodes in a negative cycle
 /// output unreachable for nodes disconnected from source
+/// time complexity O(E * V)
 
 /// in:
 /// [number of nodes] [number of edges]
@@ -73,32 +74,30 @@ int main () {
     // initialize predecessor
     std::vector<int> predecessors(n_nodes, -1);
 
-    // initialize adjacency matrix with costs to edges
+    // initialize adjacency list with costs to edges
     // adj[from] = {to, cost}
     std::vector<std::vector<std::pair<int,int>>> adj(n_nodes);
     int i_from, i_to, cost;
     for (int j = 0; j < n_edges; j++) {
         std::cin >> i_from >> i_to >> cost;
         i_from--; i_to--;
-        adj[i_from].push_back(std::make_pair(i_to, cost));
+        adj[i_from].push_back({i_to, cost});
     }
 
     // compute distances and predecessors
-    int new_cost;
     for (int k = 0; k < n_nodes - 1; k++) {
         // iterate through each edge
         for (int i_from = 0; i_from < n_nodes; i_from++) {
             for (auto [i_to, cost] : adj[i_from]) {
                 
-                if (distances[i_from] < std::numeric_limits<int>::max()) {
-                    new_cost = distances[i_from] + cost;
-                } else {
-                    new_cost = std::numeric_limits<int>::max();
+                int new_distance = distances[i_from];
+                if (new_distance < std::numeric_limits<int>::max()) {
+                    new_distance += cost;
                 }
                 
-                if(new_cost < distances[i_to]) {
+                if(new_distance < distances[i_to]) {
                     // reassign distance and predessor because we found a shorter route
-                    distances[i_to] = new_cost;
+                    distances[i_to] = new_distance;
                     predecessors[i_to] = i_from;
                 }
             }
@@ -111,13 +110,12 @@ int main () {
     for (int i_from = 0; i_from < n_nodes; i_from++) {
         for (auto [i_to, cost] : adj[i_from]) {
 
-            if (distances[i_from] < std::numeric_limits<int>::max()) {
-                new_cost = distances[i_from] + cost;
-            } else {
-                new_cost = std::numeric_limits<int>::max();
+            int new_distance = distances[i_from];
+            if (new_distance < std::numeric_limits<int>::max()) {
+                new_distance += cost;
             }
 
-            if(new_cost < distances[i_to]) {
+            if(new_distance < distances[i_to]) {
                 // cycle is detected, get candidates for cycle
                 has_cycle = true;
                 i_cycle_candidate = i_to;
